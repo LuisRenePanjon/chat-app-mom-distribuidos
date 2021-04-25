@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>RabbitMQ Chat App</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+    crossorigin="anonymous"
+  >
+
+  <style>
+    .top-margin {
+      margin-top: 48px;
+    }
+   </style>
+</head>
+<body class="top-margin">
+    <div class="container">
+  
+  
+      <!-- Modal -->
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="chatName">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+  
+            <div class="modal-header">
+              <h4 class="modal-title">Hello, Who Are You?</h4>
+            </div>
+  
+            <form id="chatNameForm" method="post">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="chatName">Name</label>
+                  <input type="text" class="form-control" id="chatName" name="chatName" placeholder="Your Chat Name">
+                </div>
+              </div>
+  
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-block">Lets Chat</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+  
+        <div class="col-lg-5 col-lg-offset-3">
+          <div class="chat-feed">
+            <!-- chat feed -->
+          </div>
+  
+          <form id="chatForm" method="post">
+            <div class="form-group">
+              <label for="message">New Message</label>
+              <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+            </div>
+  
+  
+            <!-- Hidden Name Input -->
+            <input type="hidden" id="name" name="name">
+            <button type="submit" class="btn btn-primary btn-block">Chat</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+      integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+      crossorigin="anonymous"></script>
+  
+  
+    <!-- More JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+      integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+      crossorigin="anonymous"></script>
+  
+    <script src="/socket.io/socket.io.js"></script>
+  
+    <script src="script.js"></script>
+  </body>
+</html>
