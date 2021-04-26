@@ -9,14 +9,16 @@ var io = require('socket.io')(server)
 
 var chat = io.of('/chat')
 
+
 rabbitConn(function(conn) {
   conn.createChannel(function(err, ch) {
     if (err) {
       throw new Error(err)
     }
     var ex = 'chat_ex'
-
+    //abrimos la conexion
     ch.assertExchange(ex, 'fanout', {durable: false})
+    //enalazamos la cola
     ch.assertQueue('', {exclusive: true}, function(err, q) {
       if (err) {
         throw new Error(err)
@@ -35,8 +37,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api', router)
 router.route('/chat')
 
+// Cuando se publica un nuevo mensaje de chat, 
+// abrimos un canal de comunicación a RabbitMQ 
   .post(function(req, res) {
     rabbitConn(function(conn) {
+      // Luego pasamos el canal 
       conn.createChannel(function(err, ch) {
         if (err) {
           throw new Error(err)
@@ -44,10 +49,12 @@ router.route('/chat')
         var ex = 'chat_ex'
         var q = 'chat_q'
         var msg = JSON.stringify(req.body)
-
+        //  Con 'fanout', cada consumidor que esté suscrito al "Excahge" recibirá los mensajes.
         ch.assertExchange(ex, 'fanout', {durable: false})
         ch.publish(ex, '', new Buffer(msg), {persistent: false})
+        //  Crear una cola llamada 'chat' a no ser que ya exista.
         ch.assertQueue(q, {durable: true})
+        // publica el mensaje en la cola de 'chat'.
         ch.sendToQueue(q, new Buffer(msg), {persistent: true})
         ch.close(function() {conn.close()})
       })

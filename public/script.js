@@ -36,7 +36,7 @@ function getMessages() {
       } else {
         $('#modal').modal('hide')
       }
-
+      // Recibe mensajes y los agrega.
       chatSocket.on('chat', function(message) {
         message = JSON.parse(message)
         updateFeed(message, 'append')
